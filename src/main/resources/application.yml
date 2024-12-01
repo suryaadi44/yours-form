@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: form
+    datasource:
+        url: jdbc:postgresql://localhost:5432/yours_form
+        username: root
+        password: root
+        driver-class-name: org.postgresql.Driver
