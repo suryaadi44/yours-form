@@ -1,8 +1,41 @@
+application:
+    name: "@project.artifactId@"
+    version: "@project.version@"
+    timezone: Asia/Makassar
+logging:
+    file:
+        path: logs
+        name: form-log.jsonl
+    level:
+        org:
+            hibernate: error
+        root: info
+server:
+    port: 8000
 spring:
-    application:
-        name: form
     datasource:
+        driver-class-name: org.postgresql.Driver
         url: jdbc:postgresql://localhost:5432/yours_form
         username: root
         password: root
-        driver-class-name: org.postgresql.Driver
+        hikari:
+            connection-timeout: 10000
+            idle-timeout: 120000
+            maximum-pool-size: 20
+            minimum-idle: 2
+    liquibase:
+        enabled: true
+        
+    web:
+        resources:
+            add-mappings: false
+        locale: id_ID
+    jpa:
+        hibernate:
+            ddl-auto: validate
+        properties:
+            hibernate:
+                "[default_schema]": satu_sehat
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                "[format_sql]": false
+        show-sql: false
