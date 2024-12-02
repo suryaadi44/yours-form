@@ -2,20 +2,7 @@ package com.yourstechnology.form.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 
-    private String customMessage;
-    
-    public ResourceNotFoundException(String arg0, String customMessage) {
+    public ResourceNotFoundException(String arg0) {
         super(arg0);
-        this.customMessage = customMessage;
     }
-
-    public String getCustomMessage() {
-        return customMessage;
-    }
-
-    public void setCustomMessage(String customMessage) {
-        this.customMessage = customMessage;
-    }
-
-    
 }

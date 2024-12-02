@@ -2,15 +2,17 @@ application:
     name: "@project.artifactId@"
     version: "@project.version@"
     timezone: Asia/Makassar
-    token:
-        access:
-            public-key-path: classpath:token/access-public-key
-            private-key-path: classpath:token/access-private-key.priv
-            expiration: 15m
-        refresh:
-            public-key-path: classpath:token/refresh-public-key
-            private-key-path: classpath:token/refresh-private-key.priv
-            expiration: 7d
+    allowed-origins: 
+        - http://localhost:8000
+    access-token:
+        public-key-path: cert/access.pub
+        private-key-path: cert/access.priv
+        expiration: 15m
+    refresh-token:
+        public-key-path: cert/refresh.pub
+        private-key-path: cert/refresh.priv
+        expiration: 7d
+
 logging:
     file:
         path: logs
@@ -21,6 +23,7 @@ logging:
         root: info
 server:
     port: 8000
+
 spring:
     datasource:
         driver-class-name: org.postgresql.Driver
@@ -38,6 +41,9 @@ spring:
         resources:
             add-mappings: false
         locale: id_ID
+    messages:
+        basename: locale/messages
+        encoding: UTF-8
     jpa:
         hibernate:
             ddl-auto: validate

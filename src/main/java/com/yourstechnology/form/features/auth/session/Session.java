@@ -1,18 +1,21 @@
-package com.yourstechnology.form.features.user;
+package com.yourstechnology.form.features.auth.session;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.yourstechnology.form.features.auth.user.User;
 import com.yourstechnology.form.utils.idGenerator.UUIDSequence;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,27 +28,27 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(schema = "public", name = "users", indexes = {
-        @Index(columnList = "email", unique = true)
+@Table(schema = "auth", name = "sessions", indexes = {
+        @Index(columnList = "session_id", unique = true),
+        @Index(columnList = "user_id")
 })
-public class User {
+public class Session {
     @Id
     @UUIDSequence
     private UUID id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private String email;
+    private UUID sessionId;
 
-    private OffsetDateTime emailVerifiedAt;
-
-    private String password;
-
-    private String rememberToken;
+    private Instant expiredAt;
 
     @CreatedDate
-    private OffsetDateTime createdAt;
+    private Instant createdAt;
 
     @LastModifiedDate
-    private OffsetDateTime updatedAt;
+    private Instant updatedAt;
+
 }

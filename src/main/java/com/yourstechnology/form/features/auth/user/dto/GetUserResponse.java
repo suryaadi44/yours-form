@@ -1,4 +1,4 @@
-package com.yourstechnology.form.features.user.dto;
+package com.yourstechnology.form.features.auth.user.dto;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -11,7 +11,7 @@ public class GetUserResponse {
 
     private String name;
 
-    private String email;
+    private String username;
 
     private OffsetDateTime emailVerifiedAt;
 
