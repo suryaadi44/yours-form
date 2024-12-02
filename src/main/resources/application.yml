@@ -55,3 +55,6 @@ spring:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
                 "[format_sql]": false
         show-sql: false
+        
+springdoc:
+  show-actuator: true

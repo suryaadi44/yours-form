@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -26,6 +27,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	private MessageSource messageSource;
 
 	@Override
+	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		Map<String, List<String>> errors = new HashMap<>();
@@ -39,14 +41,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 			} catch (NoSuchMessageException e) {
 			}
 
-			// Add error messages to the list for each field
 			errors.computeIfAbsent(fieldName, key -> new ArrayList<>()).add(errorMessage);
 		});
 
 		ResponseDto<Map<String, List<String>>> response = new ResponseDto<>();
 		response.setMessage(messageSource.getMessage("errors.validation", null, request.getLocale()));
-		response.setData(errors);
+		response.setErrors(errors);
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
 	}
 }

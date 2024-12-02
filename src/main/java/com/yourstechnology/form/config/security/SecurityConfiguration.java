@@ -88,7 +88,7 @@ public class SecurityConfiguration {
 		String[] allowedCorsString = {
 				"/swagger-ui.html", "/actuator/**",
 				"/v3/api-docs/**", "/swagger-ui/**",
-				"/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/refresh-token", "/api/v1/auth/logout",
+				"/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/refresh-token",
 		};
 		return allowedCorsString;
 	}
