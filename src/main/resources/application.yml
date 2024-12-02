@@ -40,7 +40,6 @@ spring:
     web:
         resources:
             add-mappings: false
-        locale: id_ID
     messages:
         basename: locale/messages
         encoding: UTF-8
