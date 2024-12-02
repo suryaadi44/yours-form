@@ -18,7 +18,7 @@ class TimeZoneLocaleBeanFactoryPostProcessor implements BeanFactoryPostProcessor
     @Override
     public void postProcessBeanFactory(final @NonNull ConfigurableListableBeanFactory ignored) throws BeansException {
         TimeZone.setDefault(
-                TimeZone.getTimeZone(env.getProperty("server.time-zone", "UTC")));
+                TimeZone.getTimeZone(env.getProperty("application.timezone", "UTC")));
     }
 
     @Override

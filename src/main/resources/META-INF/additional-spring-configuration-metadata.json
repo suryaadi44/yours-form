@@ -14,6 +14,36 @@
 			"name": "application.timezone",
 			"type": "java.lang.String",
 			"description": "Application default Timezone"
+		},
+		{
+			"name": "application.token.access.expiration",
+			"type": "java.lang.String",
+			"description": "Access token expiration time"
+		},
+		{
+			"name": "application.token.refresh.expiration",
+			"type": "java.lang.String",
+			"description": "Refresh token expiration time"
+		},
+		{
+			"name": "application.token.refresh.private-key-path",
+			"type": "java.lang.String",
+			"description": "A description for 'application.token.refresh.private-key-path'"
+		},
+		{
+			"name": "application.token.refresh.public-key-path",
+			"type": "java.lang.String",
+			"description": "A description for 'application.token.refresh.public-key-path'"
+		},
+		{
+			"name": "application.token.access.private-key-path",
+			"type": "java.lang.String",
+			"description": "A description for 'application.token.access.private-key-path'"
+		},
+		{
+			"name": "application.token.access.public-key-path",
+			"type": "java.lang.String",
+			"description": "A description for 'application.token.access.public-key-path'"
 		}
 	]
 }

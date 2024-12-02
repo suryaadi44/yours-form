@@ -5,11 +5,11 @@ plugins {
 	id 'org.hibernate.orm' version '6.6.2.Final'
 	id 'org.graalvm.buildtools.native' version '0.10.3'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
-    id 'org.liquibase.gradle' version '2.2.0'
+    id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
 }
 
 group = 'com.yourstechnology'
-version = '0.0.1-SNAPSHOT'
+version = '0.1'
 
 java {
 	toolchain {
@@ -32,15 +32,9 @@ ext {
 }
 
 dependencies {
-    liquibaseRuntime 'org.liquibase:liquibase-core:4.30.0'
-    liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.1.1'
-    liquibaseRuntime 'info.picocli:picocli:4.7.5'
-    liquibaseRuntime 'org.yaml:snakeyaml:1.33'
-    liquibaseRuntime 'postgresql:postgresql:42.6.0'
-}
-apply plugin: "org.liquibase.gradle"
-
-dependencies {
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.6'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
     implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '8.0'
     implementation "ch.qos.logback:logback-core:1.5.12", "ch.qos.logback:logback-classic:1.5.12"
     implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.1.0'

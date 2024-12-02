@@ -2,6 +2,15 @@ application:
     name: "@project.artifactId@"
     version: "@project.version@"
     timezone: Asia/Makassar
+    token:
+        access:
+            public-key-path: classpath:token/access-public-key
+            private-key-path: classpath:token/access-private-key.priv
+            expiration: 15m
+        refresh:
+            public-key-path: classpath:token/refresh-public-key
+            private-key-path: classpath:token/refresh-private-key.priv
+            expiration: 7d
 logging:
     file:
         path: logs
@@ -23,9 +32,8 @@ spring:
             idle-timeout: 120000
             maximum-pool-size: 20
             minimum-idle: 2
-    liquibase:
+    flyway:
         enabled: true
-        
     web:
         resources:
             add-mappings: false

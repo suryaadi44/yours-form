@@ -25,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {
+@Table(schema = "public", name = "users", indexes = {
         @Index(columnList = "email", unique = true)
 })
 public class User {

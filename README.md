@@ -6,10 +6,11 @@ Dynamic form builder that allows you to create forms with different types of que
 
 Requirements:
 - Java 17
-- Liquibase (Follow the instructions in the [official documentation](https://docs.liquibase.com/start/install/home.html) for installation)
 
-Run the following command to apply the migrations:
+Run the following command to create the database schema:
 ```bash
-liquibase --changeLogFile=src/main/resources/db/changelog/db.changelog-master.sql --url=jdbc:postgresql://localhost:5432/your_form --username=your_form --password=your_form update
+gradle flywayMigrate -Dflyway.url=jdbc:postgresql://localhost:5432/your_form -Dflyway.user=root -Dflyway.password=root
+```
+
 ```
 
