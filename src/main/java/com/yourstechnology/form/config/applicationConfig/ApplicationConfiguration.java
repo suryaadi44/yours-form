@@ -1,5 +1,7 @@
 package com.yourstechnology.form.config.applicationConfig;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,16 +13,11 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "application")
 @Configuration
 public class ApplicationConfiguration {
-    private String name;
-    private String version;
-    private String timezone;
+	private String name;
+	private String version;
+	private String timezone;
+	private List<String> allowedOrigins;
 
-    @Getter
-    @Setter
-    public class Token {
-        private TokenConfiguration access;
-        private TokenConfiguration refresh;
-    }
-    
-    private Token token;
+	private TokenConfiguration accessToken;
+	private TokenConfiguration refreshToken;
 }

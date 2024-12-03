@@ -1,4 +1,4 @@
-package com.yourstechnology.form.utils;
+package com.yourstechnology.form.utils.dto;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.yourstechnology.form.features.user.dto;
+package com.yourstechnology.form.features.auth.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

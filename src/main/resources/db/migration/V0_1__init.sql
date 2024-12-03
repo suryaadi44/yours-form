@@ -1,4 +1,6 @@
-CREATE TABLE users (
+CREATE SCHEMA auth;
+
+CREATE TABLE auth.users (
     id UUID PRIMARY KEY,
     name VARCHAR(255),
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -9,4 +11,13 @@ CREATE TABLE users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE UNIQUE INDEX idx_user_email ON users(email);
+CREATE UNIQUE INDEX idx_user_email ON auth.users(email);
+
+CREATE TABLE auth.sessions (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id),
+    session_id UUID NOT NULL,
+    expired_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+)

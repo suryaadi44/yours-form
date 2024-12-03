@@ -1,4 +1,4 @@
-package com.yourstechnology.form.features.user;
+package com.yourstechnology.form.features.auth.user;
 
 import java.util.Optional;
 import java.util.UUID;

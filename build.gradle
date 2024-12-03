@@ -1,73 +1,57 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.0'
-	id 'io.spring.dependency-management' version '1.1.6'
-	id 'org.hibernate.orm' version '6.6.2.Final'
-	id 'org.graalvm.buildtools.native' version '0.10.3'
-	id 'org.asciidoctor.jvm.convert' version '3.3.2'
-    id "org.springdoc.openapi-gradle-plugin" version "1.9.0"
+  id 'java'
+  id 'org.springframework.boot' version '3.4.0'
+  id 'io.spring.dependency-management' version '1.1.6'
 }
+
 
 group = 'com.yourstechnology'
 version = '0.1'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
 }
 
 repositories {
-	mavenCentral()
-}
-
-ext {
-	set('snippetsDir', file("build/generated-snippets"))
+  mavenCentral()
+  maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.6'
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.flywaydb:flyway-database-postgresql'
-    implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '8.0'
-    implementation "ch.qos.logback:logback-core:1.5.12", "ch.qos.logback:logback-classic:1.5.12"
-    implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.1.0'
-    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.1'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation 'com.fasterxml.uuid:java-uuid-generator:5.1.0'
-}
-
-hibernate {
-	enhancement {
-		enableAssociationManagement = true
-	}
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+  implementation 'org.flywaydb:flyway-core'
+  implementation 'org.flywaydb:flyway-database-postgresql'
+  compileOnly 'org.projectlombok:lombok'
+  developmentOnly 'org.springframework.boot:spring-boot-devtools'
+  runtimeOnly 'org.postgresql:postgresql'
+  annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+  annotationProcessor 'org.projectlombok:lombok'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.springframework.security:spring-security-test'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  
+  implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0"
+  implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.1'
+  implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.6'
+  implementation 'com.fasterxml.uuid:java-uuid-generator:5.1.0'
+  implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '8.0'
+  implementation "ch.qos.logback:logback-core:1.5.12", "ch.qos.logback:logback-classic:1.5.12"
 }
 
 tasks.named('test') {
-	outputs.dir snippetsDir
-	useJUnitPlatform()
+  useJUnitPlatform()
 }
 
-tasks.named('asciidoctor') {
-	inputs.dir snippetsDir
-	dependsOn test
-}
