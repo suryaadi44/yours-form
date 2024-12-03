@@ -34,12 +34,11 @@ public class UserController {
 	})
 	public ResponseEntity<ResponseDto<UserResponse>> getLoggedUser() {
 		UserResponse result = mainService.getLoggedUser();
-		throw new RuntimeException("This is a test exception");
-		// ResponseDto<UserResponse> response = new ResponseDto<>();
-		// response.setMessage(mainService.FEATURE_NAME);
-		// response.setData(result);
+		ResponseDto<UserResponse> response = new ResponseDto<>();
+		response.setMessage(mainService.FEATURE_NAME);
+		response.setData(result);
 
-		// return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 	@PostMapping("/login")
