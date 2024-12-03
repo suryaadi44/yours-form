@@ -27,6 +27,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.yourstechnology.form.config.applicationConfig.ApplicationConfiguration;
 import com.yourstechnology.form.features.auth.user.UserRepository;
+import com.yourstechnology.form.handler.AccessDeniedHandlerFilter;
+import com.yourstechnology.form.handler.AuthenticationEntryPointException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -65,8 +67,8 @@ public class SecurityConfiguration {
 		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		http.authorizeHttpRequests(
 				requests -> requests.requestMatchers(getWhiteList()).permitAll().anyRequest().authenticated());
-		// http.exceptionHandling(handling -> handling.accessDeniedHandler(new AccessDeniedHandlerFilter()));
-		// http.exceptionHandling(handling -> handling.authenticationEntryPoint(new AuthenticationEntryPointException()));
+		http.exceptionHandling(handling -> handling.accessDeniedHandler(new AccessDeniedHandlerFilter()));
+		http.exceptionHandling(handling -> handling.authenticationEntryPoint(new AuthenticationEntryPointException()));
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
@@ -86,9 +88,8 @@ public class SecurityConfiguration {
 
 	private String[] getWhiteList() {
 		String[] allowedCorsString = {
-				"/swagger-ui.html", "/actuator/**",
-				"/v3/api-docs/**", "/swagger-ui/**",
-				"/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/auth/refresh-token",
+				"/swagger-ui.html", "/actuator/**", "/v3/api-docs/**", "/swagger-ui/**", "/api/v1/auth/login",
+				"/api/v1/auth/register", "/api/v1/auth/refresh-token",
 		};
 		return allowedCorsString;
 	}
