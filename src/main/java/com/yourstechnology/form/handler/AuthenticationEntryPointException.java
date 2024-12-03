@@ -2,6 +2,7 @@ package com.yourstechnology.form.handler;
 
 import java.io.IOException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -18,6 +19,7 @@ public class AuthenticationEntryPointException implements AuthenticationEntryPoi
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
 		ResponseDto<Boolean> result = new ResponseDto<>();
 		result.setData(false);

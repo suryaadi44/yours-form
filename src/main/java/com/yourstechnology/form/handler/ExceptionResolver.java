@@ -1,5 +1,6 @@
 package com.yourstechnology.form.handler;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
@@ -8,6 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -19,11 +21,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yourstechnology.form.exception.CustomUnauthorizedException;
 import com.yourstechnology.form.exception.DuplicateResourceException;
 import com.yourstechnology.form.exception.ResourceNotFoundException;
 import com.yourstechnology.form.utils.dto.ResponseDto;
 
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestControllerAdvice
 public class ExceptionResolver {
 
@@ -165,5 +172,20 @@ public class ExceptionResolver {
 		response.setData(false);
 		response.setMessage(messageSource.getMessage("errors.CustomUnauthorizedException", null, locale));
 		return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+	}
+
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public void handleAllExceptions(Exception ex, HttpServletResponse response) throws IOException {
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value()); 
+
+		ResponseDto<Boolean> result = new ResponseDto<>();
+		result.setData(false); 
+		result.setMessage("Internal Server Error: " + ex.getMessage());
+		log.error("Internal Server Error", ex);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.writeValue(response.getOutputStream(), result);
 	}
 }
