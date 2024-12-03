@@ -67,4 +67,11 @@ public class UserService {
 		return CommonCreatedResponse.builder().id(user.getId()).build();
 	}
 
+	public Boolean logout() {
+		String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+		jwtService.invalidateToken(token);
+
+		return true;
+	}
+
 }

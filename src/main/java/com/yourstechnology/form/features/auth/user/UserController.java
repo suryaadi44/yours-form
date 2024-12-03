@@ -1,6 +1,9 @@
 package com.yourstechnology.form.features.auth.user;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +31,21 @@ public class UserController {
 	@Autowired
 	private UserService mainService;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	@GetMapping("/me")
 	@Operation(summary = "Get current logged in user data", security = {
 			@SecurityRequirement(name = "bearerToken")
 	})
-	public ResponseEntity<ResponseDto<UserResponse>> getLoggedUser() {
+	public ResponseEntity<ResponseDto<UserResponse>> getLoggedUser(Locale locale) {
 		UserResponse result = mainService.getLoggedUser();
+
+		Object[] args = {
+				mainService.FEATURE_NAME
+		};
 		ResponseDto<UserResponse> response = new ResponseDto<>();
-		response.setMessage(mainService.FEATURE_NAME);
+		response.setMessage(messageSource.getMessage("success.get", args, locale));
 		response.setData(result);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -46,7 +56,7 @@ public class UserController {
 		AuthResponse result = mainService.login(req);
 
 		ResponseDto<AuthResponse> response = new ResponseDto<>();
-		response.setMessage(mainService.FEATURE_NAME);
+		response.setMessage("Login success");
 		response.setData(result);
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -57,10 +67,22 @@ public class UserController {
 		CommonCreatedResponse result = mainService.signup(request);
 
 		ResponseDto<CommonCreatedResponse> response = new ResponseDto<>();
-		response.setMessage(mainService.FEATURE_NAME);
+		response.setMessage("Register success");
 		response.setData(result);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<ResponseDto<Boolean>> logout() {
+		Boolean result = mainService.logout();
+
+		ResponseDto<Boolean> response = new ResponseDto<>();
+		response.setMessage("Logout Success");
+		response.setData(result);
+
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+
 	}
 
 }

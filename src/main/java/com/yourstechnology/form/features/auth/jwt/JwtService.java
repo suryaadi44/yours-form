@@ -130,12 +130,21 @@ public class JwtService {
 		Session session = new Session();
 		session.setUser(user);
 		session.setSessionId(sessionId);
-		session.setExpiredAt(
-				new Date(response.getAccess().getExpiresAt()).toInstant());
+		session.setExpiredAt(new Date(response.getAccess().getExpiresAt()).toInstant());
 
 		sessionRepo.save(session);
 
 		return response;
+	}
+
+	public void invalidateToken(String token) {
+		UUID sessionId = UUID.fromString(
+				extractClaim(token, TokenTypeConst.ACCESS_TOKEN, claims -> claims.get("sid", String.class)));
+
+		Session session = sessionRepo.findBySessionId(sessionId)
+				.orElseThrow(() -> new CustomUnauthorizedException("session not found"));
+
+		sessionRepo.delete(session);
 	}
 
 	public Boolean isTokenValid(String token, String category) {
